@@ -18,7 +18,7 @@ def clip_list(request, source_slug='seinfeld', tag_slug=None, home=False):
     """
     context = {}
     
-    if 'page' not in request.GET or request.GET['page'] is not '1':
+    if 'page' not in request.GET or request.GET['page'] is '1':
         context.update({
             'home': home,
         })
