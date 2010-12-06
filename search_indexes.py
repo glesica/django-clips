@@ -1,10 +1,9 @@
-from haystack.indexes import *
-from haystack import site
+from haystack import indexes, site
 
 from clips.models import Clip, ClipSource
 
-class ClipIndex(SearchIndex):
-    text = CharField(
+class ClipIndex(indexes.SearchIndex):
+    text = indexes.CharField(
         document=True,
         use_template=True,
     )
@@ -17,4 +16,5 @@ class ClipIndex(SearchIndex):
         """
         source = ClipSource.objects.get(slug='seinfeld')
         return Clip.objects.filter(source=source)
-    
+
+site.register(Clip, ClipIndex)
