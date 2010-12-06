@@ -4,8 +4,6 @@ from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFou
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext
 
-from taggit.models import Tag
-
 from clips.models import Clip, ClipTag
 from clips.forms import RatingForm, PerPageForm
 from clips.utils import paginate_clips
@@ -31,7 +29,7 @@ def clip_list(request, source_slug='seinfeld', tag_slug=None, home=False):
     
     # then filter by tag name if necessary
     if tag_slug:
-        tag = get_object_or_404(Tag, slug=tag_slug)
+        tag = get_object_or_404(ClipTag, slug=tag_slug)
         context.update({
             'tag': tag,
         })
@@ -51,7 +49,7 @@ def tag_list(request):
     """
     context = {}
     
-    tags = Tag.objects.all()
+    tags = ClipTag.objects.all()
     
     context.update({
         'tags': tags,

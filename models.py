@@ -2,10 +2,10 @@ from django.db import models
 
 from django_extensions.db.models import TimeStampedModel, TitleSlugDescriptionModel
 from taggit.managers import TaggableManager
-from taggit.models import Tag, GenericTaggedItemBase
+from taggit.models import Tag, TagBase, GenericTaggedItemBase
 
 
-class ClipTag(Tag):
+class ClipTag(TagBase):
     """
     A clip tag that includes a description of the tag.
     """
@@ -19,7 +19,11 @@ class TaggedClip(GenericTaggedItemBase):
     """
     Through model for custom tag.
     """
-    tag = models.ForeignKey(ClipTag)
+    tag = models.ForeignKey('ClipTag', related_name="%(app_label)s_%(class)s_items")
+    
+    class Meta:
+        verbose_name = "Tagged Clip Item"
+        verbose_name_plural = "Tagged Clip Items"
 
 
 class Clip(TimeStampedModel):
@@ -63,7 +67,7 @@ class Clip(TimeStampedModel):
         blank=True,
         null=True,
     )
-    tags = TaggableManager()
+    tags = TaggableManager(through=TaggedClip)
     
     class Meta:
         ordering = ['-modified', 'name']
