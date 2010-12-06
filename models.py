@@ -66,7 +66,7 @@ class Clip(TimeStampedModel):
     tags = TaggableManager()
     
     class Meta:
-        ordering = ['name', '-modified']
+        ordering = ['-modified', 'name']
     
     def __unicode__(self):
         return self.name
