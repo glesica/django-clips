@@ -13,6 +13,9 @@ class ClipTag(TagBase):
         blank=True,
         null=True,
     )
+    
+    class Meta:
+        ordering = ['name']
 
 
 class TaggedClip(GenericTaggedItemBase):
@@ -70,7 +73,7 @@ class Clip(TimeStampedModel):
     tags = TaggableManager(through=TaggedClip)
     
     class Meta:
-        ordering = ['-modified', 'name']
+        ordering = ['name', '-modified']
     
     def __unicode__(self):
         return self.name
@@ -101,7 +104,7 @@ class ClipSource(TitleSlugDescriptionModel):
         return self.title
     
     def get_absolute_url(self):
-        #TODO fix this to use url lookup
+        #TODO fix this to use url lookup, not necessary until next version
         return '/yadadb/%s/' % self.slug
 
 
@@ -157,4 +160,4 @@ class Contributor(models.Model):
         return self.first_name + ' ' + self.last_name
     
     class Meta:
-        ordering = ['last_name']
+        ordering = ['last_name', 'first_name']
