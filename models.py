@@ -65,8 +65,7 @@ class Clip(TimeStampedModel):
         blank=True,
         null=True,
     )
-    embed_id = models.CharField(
-        max_length=250,
+    embed_id = models.TextField(
         blank=True,
         null=True,
     )
