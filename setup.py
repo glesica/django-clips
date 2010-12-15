@@ -26,7 +26,7 @@ setup(
     requires=[
         'django',
         'PIL',
-        'django-extensions (==0.5)',
-        'django-taggit',
+        'django_extensions',
+        'django_taggit',
     ]
 )
