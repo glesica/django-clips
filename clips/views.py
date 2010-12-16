@@ -4,11 +4,11 @@ from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFou
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext
 
-from clips.models import Clip, ClipTag
+from clips.models import Clip, ClipTag, Contributor
 from clips.forms import RatingForm, PerPageForm
 from clips.utils import paginate_clips
 
-def clip_list(request, source_slug='seinfeld', tag_slug=None, home=False):
+def clip_list(request, source_slug='seinfeld', tag_slug=None, credit_id=None, home=False):
     """
     Main page.
     NOTE: source_slug defaults to 'seinfeld' until site moves over to 
@@ -34,6 +34,14 @@ def clip_list(request, source_slug='seinfeld', tag_slug=None, home=False):
             'tag': tag,
         })
         clips = clips.filter(tags=tag)
+    
+    # filter by contributor name
+    if credit_id:
+        credit = get_object_or_404(Contributor, pk=credit_id)
+        context.update({
+            'credit': credit,
+        })
+        clips = clips.filter(credit=credit)
     
     context.update(paginate_clips(clips, request))
 

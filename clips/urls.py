@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     (r'^index/$', tag_list),
     (r'^concept/(?P<tag_slug>[a-zA-Z0-9_-]+)/$', clip_list),
     (r'^clip/(?P<clip_id>\d+)/$', clip),
+    (r'^contributor/(?P<credit_id>\d+)/$', clip_list),
 )
